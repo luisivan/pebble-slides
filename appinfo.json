@@ -5,13 +5,17 @@
   "companyName": "Luis Ivan Cuende",
   "versionCode": 1,
   "versionLabel": "1.0.0",
+  "capabilities": [ "configurable" ],
   "watchapp": {
     "watchface": false
   },
   "appKeys": {
     "up": 0,
     "select": 1,
-    "down": 2
+    "down": 2,
+    "start": 3,
+    "end": 4,
+    "note": 5
   },
   "resources": {
     "media": []
