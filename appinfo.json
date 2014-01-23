@@ -1,0 +1,19 @@
+{
+  "uuid": "3d11c827-e9eb-4951-8152-8327bd1c6655",
+  "shortName": "Slides",
+  "longName": "Pebble Slides",
+  "companyName": "Luis Ivan Cuende",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "up": 0,
+    "select": 1,
+    "down": 2
+  },
+  "resources": {
+    "media": []
+  }
+}
