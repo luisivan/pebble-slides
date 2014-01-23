@@ -12,3 +12,9 @@ input, select, textarea, button {
 select, button {
 	width: 95%;
 }
+
+textarea {
+	overflow:auto;
+	-webkit-overflow-scrolling: touch;
+	height:70%;
+}
