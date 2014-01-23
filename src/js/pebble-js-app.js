@@ -32,7 +32,6 @@ var Utils = {
         doo()
 	},
 	send: function(data) {
-		console.log(data)
 		var chunks = Math.ceil(data.length/CHUNKS_LENGTH),
 			queue = []
 
@@ -63,10 +62,10 @@ Pebble.addEventListener("appmessage", function(e) {
 	else if (button == 'down')
 		currentSlide++
 
-	console.log(notes[currentSlide])
 	setTimeout(function() {
-		Utils.send(notes[currentSlide])
-	}, 500)
+		var data = notes[currentSlide]
+		data && Utils.send(data)
+	}, 100)
 })
 
 Pebble.addEventListener("showConfiguration", function (e) {

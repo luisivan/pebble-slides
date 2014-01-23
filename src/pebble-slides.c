@@ -73,7 +73,8 @@ void view() {
 
 // Events
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  view();
+  if (strlen(note) > 0)
+    view();
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -105,7 +106,7 @@ void update_stopwatch() {
 
 void handle_timer(void* data) {
   min += 1;
-  timer = app_timer_register(60000, handle_timer, NULL);
+  timer = app_timer_register(1000, handle_timer, NULL);
   update_stopwatch();
 }
 
@@ -139,7 +140,7 @@ static void init(void) {
   app_message_register_inbox_received(msg_received);
   app_message_open(app_message_inbox_size_maximum(), 20);
 
-  timer = app_timer_register(60000, handle_timer, NULL);
+  timer = app_timer_register(1000, handle_timer, NULL);
 
   window = window_create();
   window_set_click_config_provider(window, click_config_provider);
