@@ -42,11 +42,11 @@ var Utils = {
 	}
 }
 
-var IP = localStorage.getItem('ip') || '192.168.0.2',
+var IP = localStorage.getItem('ip') || '192.168.0.2:8686',
 	notes = JSON.parse(localStorage.getItem('notes')),
 	currentSlide = 0
 
-var ws = new WebSocket('ws://'+IP+':8686')
+var ws = new WebSocket('ws://'+IP)
 
 Pebble.addEventListener("appmessage", function(e) {
 	var button = Object.keys(e.payload)[0]
