@@ -48,6 +48,11 @@ var IP = localStorage.getItem('ip') || '192.168.0.2:8686',
 
 var ws = new WebSocket('ws://'+IP)
 
+Pebble.addEventListener("ready", function() {
+    var data = notes[0]
+    data && Utils.send(data.replace(/\+/g, " "))
+})
+
 Pebble.addEventListener("appmessage", function(e) {
 	var button = Object.keys(e.payload)[0]
 	ws.send(button)
