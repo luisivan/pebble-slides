@@ -111,13 +111,12 @@ void handle_timer(void* data) {
 }
 
 // Notes
-
 static void msg_received(DictionaryIterator *iter, void *context) {
   if (dict_find(iter, KEY_START)) strcpy(note, "");
 
   strcat(note, dict_find(iter, KEY_NOTE)->value->cstring);
 
-  if (dict_find(iter, KEY_END)) view();
+  //if (dict_find(iter, KEY_END)) view();
 }
 
 // Main window

@@ -1,11 +1,6 @@
 var CHUNKS_LENGTH = 512
 
 var Utils = {
-	http: function(ip, button, cb, errcb) {
-		var req = new XMLHttpRequest()
-	  	req.open('GET', 'http://'+ip+':8686/'+button, true)
-	  	req.send()
-	},
 	sendQueue: function (queue) {
         var index = retries = 0
 
@@ -34,8 +29,6 @@ var Utils = {
 	send: function(data) {
 		var chunks = Math.ceil(data.length/CHUNKS_LENGTH),
 			queue = []
-
-		console.log(chunks)
                 
         for (var i = 0; i < chunks; i++){
             var payload = {note:data.substring(CHUNKS_LENGTH*i, CHUNKS_LENGTH*(i+1))}
@@ -53,10 +46,11 @@ var IP = localStorage.getItem('ip') || '192.168.0.2',
 	notes = JSON.parse(localStorage.getItem('notes')),
 	currentSlide = 0
 
+var ws = new WebSocket('ws://'+IP+':8686')
 
 Pebble.addEventListener("appmessage", function(e) {
 	var button = Object.keys(e.payload)[0]
-	Utils.http(IP, button)
+	ws.send(button)
 	if (button == 'up')
 		currentSlide--
 	else if (button == 'down')
@@ -64,7 +58,7 @@ Pebble.addEventListener("appmessage", function(e) {
 
 	setTimeout(function() {
 		var data = notes[currentSlide]
-		data && Utils.send(data)
+		data && Utils.send(data.replace(/\+/g, " "))
 	}, 100)
 })
 
