@@ -71,5 +71,5 @@ Pebble.addEventListener("webviewclosed", function (e) {
 	var payload = JSON.parse(e.response)
 	localStorage.setItem('ip', payload.ip)
 	localStorage.setItem('notes', JSON.stringify(payload.notes))
-	notes = payload.notes
+    Pebble.showSimpleNotificationOnPebble('Slides', 'Please close and open the app to make it work!')
 })
