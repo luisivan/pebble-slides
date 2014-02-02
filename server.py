@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from pykeyboard import PyKeyboard
 import socket
 from wsgiref.simple_server import make_server

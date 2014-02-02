@@ -18,6 +18,13 @@
     "note": 5
   },
   "resources": {
-    "media": []
+    "media": [
+      {
+        "type": "png",
+        "name": "ICON",
+        "file": "icon.png",
+        "menuIcon": true
+      }
+    ]
   }
 }
