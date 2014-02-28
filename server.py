@@ -37,7 +37,7 @@ class PebbleWebSocket(WebSocket):
 
 # either take a port from arguments or serve on random port
 port = 0
-if (len(sys.argv) == 2) and int(sys.argv[1] >= 1024) :
+if len(sys.argv) == 2:
 	port = int(sys.argv[1])
 elif len(sys.argv) != 1:
 	print("usage: %s [port]" % sys.argv[0])
