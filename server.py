@@ -54,6 +54,6 @@ print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_p
 server.initialize_websockets_manager()
 
 try:
-    server.serve_forever()
+	server.serve_forever()
 except KeyboardInterrupt:
 	server.server_close()

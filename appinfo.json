@@ -15,7 +15,10 @@
     "down": 2,
     "start": 3,
     "end": 4,
-    "note": 5
+    "note": 5,
+    "uphold": 6,
+    "selecthold": 7,
+    "downhold": 8
   },
   "resources": {
     "media": [
