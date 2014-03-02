@@ -21,18 +21,20 @@ class PebbleWebSocket(WebSocket):
 
 	def received_message(self, message):
 
-		if message.data == 'down':
-			if isMac():
+		# Mac
+		if isMac():
+			if message.data == 'down':
 				cmd = "osascript -e 'tell application \"System Events\" to keystroke (ASCII character 29)'"
 				os.system(cmd)
-			else:
-				PyKeyboard().tap_key(k.right_key)
-		
-		elif message.data == 'up':
-			if isMac():
+			elif message.data == 'up':
 				cmd = "osascript -e 'tell application \"System Events\" to keystroke (ASCII character 28)'"
 				os.system(cmd)
-			else:
+
+		# Window, Linux
+		else:
+			if message.data == 'down':
+				PyKeyboard().tap_key(k.right_key)
+			elif message.data == 'up':
 				PyKeyboard().tap_key(k.left_key)
 
 # either take a port from arguments or serve on random port
@@ -50,4 +52,8 @@ server = make_server('', port, server_class=WSGIServer,
 ip = socket.gethostbyname(socket.gethostname())
 print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_port))
 server.initialize_websockets_manager()
-server.serve_forever()
+
+try:
+	server.serve_forever()
+except KeyboardInterrupt:
+	server.server_close()

@@ -14,7 +14,10 @@ enum {
   KEY_DOWN = 0x2,
   KEY_START = 0x3,
   KEY_END = 0x4,
-  KEY_NOTE = 0x5
+  KEY_NOTE = 0x5,
+  KEY_UP_HOLD = 0x6,
+  KEY_SELECT_HOLD = 0x7,
+  KEY_DOWN_HOLD = 0x8
 };
 
 // Send keys
@@ -85,10 +88,25 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   send(KEY_DOWN);
 }
 
+static void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send(KEY_SELECT_HOLD);
+}
+
+static void up_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send(KEY_UP_HOLD);
+}
+
+static void down_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send(KEY_DOWN_HOLD);
+}
+
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
+  window_long_click_subscribe(BUTTON_ID_SELECT, 700, select_long_click_handler, NULL);
+  window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, NULL);
+  window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, NULL);
 }
 
 // Stopwatch
