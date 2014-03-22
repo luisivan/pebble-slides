@@ -4,7 +4,7 @@
   "longName": "Pebble Slides",
   "companyName": "Luis Ivan Cuende",
   "versionCode": 1,
-  "versionLabel": "1.0.0",
+  "versionLabel": "1.0.2",
   "capabilities": [ "configurable" ],
   "watchapp": {
     "watchface": false
