@@ -16,6 +16,7 @@ if isMac():
 	import os
 else:
 	from pykeyboard import PyKeyboard
+	k = PyKeyboard()
 
 class PebbleWebSocket(WebSocket):
 
@@ -33,9 +34,9 @@ class PebbleWebSocket(WebSocket):
 		# Window, Linux
 		else:
 			if message.data == 'down':
-				PyKeyboard().tap_key(k.right_key)
+				k.tap_key(k.right_key)
 			elif message.data == 'up':
-				PyKeyboard().tap_key(k.left_key)
+				k.tap_key(k.left_key)
 
 # either take a port from arguments or serve on random port
 port = 0
