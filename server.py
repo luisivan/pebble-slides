@@ -2,6 +2,7 @@
 
 import sys
 import socket
+import netifaces
 from wsgiref.simple_server import make_server
 from ws4py.websocket import WebSocket
 from ws4py.server.wsgirefserver import WSGIServer, WebSocketWSGIRequestHandler
@@ -10,6 +11,24 @@ from ws4py.server.wsgiutils import WebSocketWSGIApplication
 # return true if Mac
 def isMac():
 	return sys.platform == 'darwin'
+
+# If we can't get the IP address by hostname (as observed on a Mac), then try by interface
+# Thanks to Gabriel Samfira (http://stackoverflow.com/questions/11735821/python-get-localhost-ip)
+def get_lan_ip():
+	ip = None
+	try:
+		ip = socket.gethostbyname(socket.gethostname())
+
+	except socket.gaierror:
+		interfaces = netifaces.interfaces()
+		for i in interfaces:
+			iface = netifaces.ifaddresses(i).get(netifaces.AF_INET)
+			if iface != None:
+				for j in iface:
+					if j['addr'] != '127.0.0.1':
+						ip = j['addr']
+						break
+	return ip
 
 # PyKeyboard does not work on Mac
 if isMac():
@@ -50,11 +69,16 @@ server = make_server('', port, server_class=WSGIServer,
 					 handler_class=WebSocketWSGIRequestHandler,
 					 app=WebSocketWSGIApplication(handler_cls=PebbleWebSocket))
 
-ip = socket.gethostbyname(socket.gethostname())
-print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_port))
-server.initialize_websockets_manager()
+ip = get_lan_ip()
 
-try:
-	server.serve_forever()
-except KeyboardInterrupt:
-	server.server_close()
+if ip is not None:
+	print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_port))
+	server.initialize_websockets_manager()
+
+	try:
+		server.serve_forever()
+	except KeyboardInterrupt:
+		server.server_close()
+
+else:
+	print('Unable to determine IP address')
