@@ -73,12 +73,12 @@ ip = get_lan_ip()
 
 if ip is not None:
 	print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_port))
-	server.initialize_websockets_manager()
-
-	try:
-		server.serve_forever()
-	except KeyboardInterrupt:
-		server.server_close()
-
 else:
-	print('Unable to determine IP address')
+	print('Pebble Slides started on port ' + str(server.server_port) + ' (Please look up your IP address)')
+
+server.initialize_websockets_manager()
+
+try:
+	server.serve_forever()
+except KeyboardInterrupt:
+	server.server_close()
