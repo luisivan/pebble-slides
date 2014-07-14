@@ -43,10 +43,10 @@ class PebbleWebSocket(WebSocket):
 
 		# Mac
 		if isMac():
-			if message.data == 'down':
+			if message.data == bytes('down', 'utf-8'):
 				cmd = "osascript -e 'tell application \"System Events\" to keystroke (ASCII character 29)'"
 				os.system(cmd)
-			elif message.data == 'up':
+			elif message.data == bytes('up', 'utf-8'):
 				cmd = "osascript -e 'tell application \"System Events\" to keystroke (ASCII character 28)'"
 				os.system(cmd)
 
