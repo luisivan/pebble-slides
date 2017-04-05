@@ -14,21 +14,21 @@ def isMac():
 
 # If we can't get the IP address by hostname (as observed on a Mac), then try by interface
 # Thanks to Gabriel Samfira (http://stackoverflow.com/questions/11735821/python-get-localhost-ip)
-def get_lan_ip():
-	ip = None
+def get_lan_ips():
+	ips = set()
 	try:
-		ip = socket.gethostbyname(socket.gethostname())
-
+		ips.add(socket.gethostbyname(socket.gethostname()))
 	except socket.gaierror:
-		interfaces = netifaces.interfaces()
-		for i in interfaces:
-			iface = netifaces.ifaddresses(i).get(netifaces.AF_INET)
-			if iface != None:
-				for j in iface:
-					if j['addr'] != '127.0.0.1':
-						ip = j['addr']
-						break
-	return ip
+		pass
+
+	for i in netifaces.interfaces():
+		iface = netifaces.ifaddresses(i).get(netifaces.AF_INET)
+		if iface != None:
+			for j in iface:
+				ips.add(j['addr'])
+
+	valid_ips = sorted([ip for ip in ips if ip != '127.0.0.1'])
+	return valid_ips
 
 # PyKeyboard does not work on Mac
 if isMac():
@@ -69,10 +69,9 @@ server = make_server('', port, server_class=WSGIServer,
 					 handler_class=WebSocketWSGIRequestHandler,
 					 app=WebSocketWSGIApplication(handler_cls=PebbleWebSocket))
 
-ip = get_lan_ip()
-
-if ip is not None:
-	print('Pebble Slides started. Your address is ' + ip + ':' + str(server.server_port))
+ips = get_lan_ips()
+if ips:
+	print('Pebble Slides started. Your address is:\n' + '\n'.join(ip + ':' + str(server.server_port) for ip in ips))
 else:
 	print('Pebble Slides started on port ' + str(server.server_port) + ' (Please look up your IP address)')
 
